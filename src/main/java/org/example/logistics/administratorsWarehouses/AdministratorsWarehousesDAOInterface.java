@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AdministratorsWarehousesDAOInterface {
     // CREATE: 새로운 관리자-창고 데이터 추가
-    void addAdministrators_Warehouse(AdministratorsWarehousesVO administrators_Warehouse) throws SQLException;
+    int addAdministrators_Warehouse(AdministratorsWarehousesVO administrators_Warehouse) throws SQLException;
 
     // READ ALL : 전체 관리자-창고 데이터 조회
     List<AdministratorsWarehousesVO> getAllAdministrators_Warehouses() throws SQLException;

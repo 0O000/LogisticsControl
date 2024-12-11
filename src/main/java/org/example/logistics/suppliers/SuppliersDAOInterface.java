@@ -12,7 +12,7 @@ public interface SuppliersDAOInterface {
     SuppliersVO getSuppliersById(int supplierId) throws SQLException;
 
     // CREATE : 새로운 공급자 데이터를 데이터베이스에 추가.
-    void addSupplier(SuppliersVO supplier) throws SQLException;
+    int addSupplier(SuppliersVO supplier) throws SQLException;
 
     // READ ALL : 모든 공급자 데이터를 조회.
     List<SuppliersVO> getAllSuppliers() throws SQLException;

@@ -38,7 +38,7 @@ public class BranchesUI {
             System.out.println("2. 전체 지점 목록");
             System.out.println("3. 지점 수정");
             System.out.println("4. 지점 삭제");
-            System.out.println("5. 지점 정보 상세 조회");
+            System.out.println("5. 지점 정보 상세 조회 및 통계");
             System.out.println("0. 이전 메뉴");
             System.out.print("메뉴를 선택하세요 >> ");
 
@@ -76,7 +76,7 @@ public class BranchesUI {
 
     public void branchesSelect() {
         while (true) {
-            System.out.println("\n======= 지점 정보 상세 조회 =======");
+            System.out.println("\n======= 지점 정보 상세 조회 및 통계 =======");
             System.out.println("1. 특정 지점 정보 검색");
             System.out.println("2. 이름순 지점 리스트");
             System.out.println("3. 총 주문량순 리스트");
@@ -122,7 +122,7 @@ public class BranchesUI {
             System.out.println("1. 지점별 총 주문량(막대 그래프)");
             System.out.println("2. 지점별 총 주문량(원형 그래프)");
             System.out.println("3. 상품별 지점 주문량(막대 그래프)");
-            System.out.println("4. 상품별 지점 주량(원형 그래프)");
+            System.out.println("4. 상품별 지점 수량(원형 그래프)");
             System.out.println("0. 이전 메뉴");
             System.out.print("메뉴를 선택하세요 >> ");
 
@@ -282,10 +282,10 @@ public class BranchesUI {
         if (branches.isEmpty()) {
             System.out.println("지점을 찾지 못했습니다.");
         } else {
-            System.out.println("===== 상품별 지점 주문량 =====");
+            System.out.println("=================== 상품별 지점 주문량 ===================");
             System.out.printf("%-20s %-20s %-30s%n",
-                    "지점 이름", "상품 이름", "총 주량");
-            System.out.println("===========================");
+                    "지점 이름", "상품 이름", "총 수량");
+            System.out.println("======================================================");
             for (BranchesOutgoingOrdersProductsVO branch : branches) {
                 System.out.printf("%-20s %-20s %-30s%n",
                         branch.getBranch_name(),

@@ -3,10 +3,7 @@ package org.example.logistics.suppliers;
 import org.example.logistics.service.CRUDLogger;
 import org.example.logistics.service.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,21 +21,31 @@ public class SuppliersDAO implements SuppliersDAOInterface {
 
     // CREATE : 새로운 공급자 데이터를 데이터베이스에 추가.
     @Override
-    public void addSupplier(SuppliersVO supplier) throws SQLException {
+    public int addSupplier(SuppliersVO supplier) throws SQLException {
+        int supplierId = 0;
         // INSERT SQL 쿼리 작성: 공급자의 이름, 연락처, 위치 데이터를 삽입.
         String sql = "INSERT INTO Suppliers(name, contact, location) VALUES(?,?,?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             // SQL의 ?에 데이터를 바인딩.
             stmt.setString(1, supplier.getName()); // 공급자 이름
             stmt.setString(2, supplier.getContact()); // 공급자 연락처
             stmt.setString(3, supplier.getLocation()); // 공급자 위치
             stmt.executeUpdate(); // 쿼리 실행
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                supplierId = rs.getInt(1);
+                System.out.println(supplierId + "=============");
+            }
         } catch (Exception e) {
+
             // 예외 발생 시 스택 트레이스를 출력.
+
             e.printStackTrace();
         }
         // 로그 기록
         CRUDLogger.log("CREATE", "공급자", "추가한 공급자 이름: " + supplier.getName());
+        return supplierId;
     }
 
     // READ ALL : 모든 공급자 데이터를 조회.

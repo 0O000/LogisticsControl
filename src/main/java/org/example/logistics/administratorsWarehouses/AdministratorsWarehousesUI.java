@@ -130,9 +130,9 @@ public class AdministratorsWarehousesUI {
         administrators_warehouse.setWarehouse_id(warehouse_id);
 
         // DAO를 통해 데이터베이스에 삽입
-        administrators_warehousesDAO.addAdministrators_Warehouse(administrators_warehouse);
+        int admin_warehouse_id =  administrators_warehousesDAO.addAdministrators_Warehouse(administrators_warehouse);
         System.out.println("데이터가 성공적으로 추가되었습니다.");
-
+        administrators_warehouse.setAdmin_warehouse_id(admin_warehouse_id);
         // 추가된 데이터를 테이블 형식으로 출력
         System.out.println("\n=== 추가된 데이터 ===");
         String format = "| %-20s | %-15s | %-10s | %-20s |\n";
@@ -140,10 +140,9 @@ public class AdministratorsWarehousesUI {
         System.out.printf(format, "창고-관리자 ID", "관리자 ID", "창고 ID", "생성 시간");
         System.out.println("+----------------------+-----------------+------------+----------------------+");
         System.out.printf(format,
-                administrators_warehouse.getAdmin_warehouse_id() == 0 ? "Auto-generated" : administrators_warehouse.getAdmin_warehouse_id(),
+                administrators_warehouse.getAdmin_warehouse_id(),
                 administrators_warehouse.getAdmin_id(),
-                administrators_warehouse.getWarehouse_id(),
-                administrators_warehouse.getAssigned_at() == null ? "NOW()" : administrators_warehouse.getAssigned_at());
+                administrators_warehouse.getWarehouse_id());
         System.out.println("+----------------------+-----------------+------------+----------------------+");
     }
 
@@ -196,7 +195,7 @@ public class AdministratorsWarehousesUI {
 
     // 데이터 삭제
     private void deleteAdministrators_Warehouse(Scanner sc) throws SQLException {
-        System.out.println("삭제할 Admin ID를 입력하세요: ");
+        System.out.print("삭제할 Admin ID를 입력하세요: ");
         int adminID = sc.nextInt(); // 삭제할 관리자 ID 입력
 
         // DAO를 통해 데이터베이스에서 삭제

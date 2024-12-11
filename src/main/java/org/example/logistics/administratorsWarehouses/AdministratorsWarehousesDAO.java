@@ -3,10 +3,7 @@ package org.example.logistics.administratorsWarehouses;
 import org.example.logistics.service.CRUDLogger;
 import org.example.logistics.service.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +21,28 @@ public class AdministratorsWarehousesDAO implements AdministratorsWarehousesDAOI
 
     // CREATE: 새로운 관리자-창고 데이터 추가
     @Override
-    public void addAdministrators_Warehouse(AdministratorsWarehousesVO administrators_Warehouse) throws SQLException {
+    public int addAdministrators_Warehouse(AdministratorsWarehousesVO administrators_Warehouse) throws SQLException {
+        int admin_warehouse_id = 0;
         // SQL INSERT 쿼리 정의
         String sql = "INSERT INTO Administrator_warehouses(admin_id, warehouse_id) VALUES(?,?)";
-        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             // PreparedStatement를 사용하여 ? 자리에 값을 안전하게 삽입
             stmt.setInt(1, administrators_Warehouse.getAdmin_id()); // 관리자 ID
             stmt.setInt(2, administrators_Warehouse.getWarehouse_id()); // 창고 ID
             // 쿼리 실행(데이터 삽입)
             stmt.executeUpdate(); // INSERT 쿼리 실행
+
+            ResultSet rs = stmt.getGeneratedKeys();
+
+            if(rs.next()){
+                admin_warehouse_id = rs.getInt(1);
+            }
         } catch (Exception e) {
             e.printStackTrace(); // 오류 발생시 예외 출력
         }
         // 로그 기록
         CRUDLogger.log("CREATE", "창고_관리자", "추가한 관리자 ID: " + administrators_Warehouse.getAdmin_id());
+        return admin_warehouse_id;
     }
 
     // READ ALL : 전체 관리자-창고 데이터 조회

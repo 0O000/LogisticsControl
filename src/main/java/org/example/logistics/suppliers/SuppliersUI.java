@@ -123,12 +123,12 @@ public class SuppliersUI {
         supplier.setContact(contact);
         supplier.setLocation(location);
 
-        suppliersDAO.addSupplier(supplier); // DAO를 통해 데이터 추가
+        int supplierId = suppliersDAO.addSupplier(supplier); // DAO를 통해 데이터 추가
         System.out.println("\n=== 추가된 공급자 정보 ===");
         System.out.println("+------------+--------------------+--------------------+--------------------+");
         System.out.printf("| %-10s | %-18s | %-18s | %-18s |\n", "ID", "Name", "Contact", "Location");
         System.out.println("+------------+--------------------+--------------------+--------------------+");
-        System.out.printf("| %-10s | %-18s | %-18s | %-18s |\n", "(Auto)", name, contact, location);
+        System.out.printf("| %-10s | %-18s | %-18s | %-18s |\n", supplierId, name, contact, location);
         System.out.println("+------------+--------------------+--------------------+--------------------+");
         System.out.println("공급자가 성공적으로 추가되었습니다.");
     }

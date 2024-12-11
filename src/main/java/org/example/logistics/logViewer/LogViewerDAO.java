@@ -12,7 +12,7 @@ import java.util.List;
 
  // MongoDB와 상호작용하는 DAO 클래스
 
-public class LogViewerDAO {
+public class LogViewerDAO implements LogViewerDAOInterface {
     private static final MongoCollection<Document> collection;
 
     static {
@@ -21,6 +21,7 @@ public class LogViewerDAO {
 
      // 모든 로그 조회
 
+    @Override
     public List<LogViewerVO> getAllLogs() {
         List<LogViewerVO> logs = new ArrayList<>();
         FindIterable<Document> documents = collection.find();
@@ -32,6 +33,7 @@ public class LogViewerDAO {
 
      // 작업 코드로 로그 조회
 
+    @Override
     public List<LogViewerVO> getLogsByOperation(String operation) {
         List<LogViewerVO> logs = new ArrayList<>();
         FindIterable<Document> documents = collection.find(new Document("작업", operation));
@@ -43,6 +45,7 @@ public class LogViewerDAO {
 
      // 날짜 범위로 로그 조회
 
+    @Override
     public List<LogViewerVO> getLogsByDateRange(String startDate, String endDate) {
         List<LogViewerVO> logs = new ArrayList<>();
         try {
@@ -69,12 +72,4 @@ public class LogViewerDAO {
         return logs;
     }
 
-    private LogViewerVO mapToVO(Document document) {
-        return new LogViewerVO(
-                document.getString("시간"),
-                document.getString("작업"),
-                document.getString("대상"),
-                document.getString("메시지")
-        );
-    }
 }
